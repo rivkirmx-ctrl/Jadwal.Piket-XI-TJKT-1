@@ -6,227 +6,339 @@
   <meta name="google-site-verification" content="whJjgBQxTg1xyPobHsOrGNJFFK4nzUID6cEdgIfa3u4" />
   
   <!-- SEO Meta Tags -->
-  <title>Jadwal Piket XI TJKT 1</title>
+  <title>Jadwal Piket XI TJKT 1 - Mod Panel</title>
   <meta name="description" content="Jadwal piket harian kelas XI TJKT 1 real-time terupdate.">
   <meta name="keywords" content="jadwal piket xi tjkt 1, piket tjkt, smk bppi">
 
-  <!-- Google Font (Poppins) -->
+  <!-- Google Fonts: Share Tech Mono & Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --primary: #0284c7;
-      --primary-hover: #0369a1;
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
+      --bg-color: #07090e;
+      --card-bg: #0d111a;
+      --card-border: #1a2332;
+      --neon-green: #00ff88;
+      --neon-cyan: #00e5ff;
+      --neon-red: #ff0055;
+      --text-main: #e2e8f0;
       --text-muted: #64748b;
-      --border: #e2e8f0;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
     }
 
     body {
       background-color: var(--bg-color);
+      /* Cyber Grid Background Effect */
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 30px 30px, 30px 30px;
       color: var(--text-main);
-      padding: 20px 15px 40px;
-      max-width: 800px;
+      font-family: 'Poppins', sans-serif;
+      padding: 25px 15px 50px;
+      max-width: 850px;
       margin: 0 auto;
+      min-height: 100vh;
     }
 
     header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    /* Status Badge ala Cheat Menu */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: var(--neon-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon-green);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
     }
 
     header h1 {
-      font-size: 1.8rem;
-      color: var(--primary);
-      font-weight: 700;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 2rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+    }
+
+    header h1 span {
+      color: var(--neon-cyan);
     }
 
     header p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
+      font-family: 'Share Tech Mono', monospace;
+      margin-top: 5px;
     }
 
-    /* Grid Layout untuk Jadwal Hari */
+    /* Grid Layout */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 15px;
+      gap: 16px;
       margin-bottom: 30px;
     }
 
     .card {
       background: var(--card-bg);
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 18px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s ease;
+    }
+
+    /* Accent Line Atas Kartu */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+      opacity: 0.5;
+      transition: opacity 0.25s ease;
     }
 
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      transform: translateY(-3px);
+      border-color: rgba(0, 229, 255, 0.4);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
 
     .card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--primary);
-      border-bottom: 2px solid #e0f2fe;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .piket-list {
-      font-size: 0.95rem;
-      color: #334155;
-      line-height: 1.6;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.7;
       white-space: pre-line;
-      min-height: 50px;
+      min-height: 60px;
+      font-family: 'Share Tech Mono', monospace;
     }
 
-    /* Admin Panel Styling */
+    /* Admin Toggle Button */
     .admin-toggle-btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
-      background-color: #475569;
-      color: white;
-      padding: 12px;
-      border: none;
+      background: rgba(13, 17, 26, 0.8);
+      color: var(--neon-green);
+      padding: 14px;
+      border: 1px solid var(--neon-green);
       border-radius: 8px;
-      font-weight: 600;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
       cursor: pointer;
-      margin-bottom: 15px;
-      transition: background-color 0.2s;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+      transition: all 0.2s ease;
     }
 
     .admin-toggle-btn:hover {
-      background-color: #334155;
+      background: var(--neon-green);
+      color: #000;
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
     }
 
+    /* Admin Card Panel */
     .admin-card {
       display: none;
-      background: #f0f9ff;
-      border: 2px dashed var(--primary);
-      border-radius: 12px;
-      padding: 20px;
+      background: #0b0f19;
+      border: 1px dashed var(--neon-green);
+      border-radius: 10px;
+      padding: 22px;
       margin-bottom: 30px;
+      box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.05);
     }
 
     .admin-card.active {
       display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .admin-card h3 {
+      font-family: 'Share Tech Mono', monospace;
       font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: var(--primary);
+      margin-bottom: 8px;
+      color: var(--neon-green);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #475569;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+      text-transform: uppercase;
     }
 
     .form-group input {
       width: 100%;
-      padding: 10px;
-      border: 1px solid var(--border);
+      padding: 10px 14px;
+      background: #05070c;
+      border: 1px solid var(--card-border);
       border-radius: 6px;
       font-size: 0.9rem;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
       outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .form-group input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
     }
 
     .save-btn {
       width: 100%;
-      background-color: var(--primary);
-      color: white;
-      padding: 12px;
+      background: linear-gradient(135deg, var(--neon-green), #00b359);
+      color: #000;
+      padding: 13px;
       border: none;
       border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.95rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
       margin-top: 10px;
-      transition: background-color 0.2s;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
     }
 
     .save-btn:hover {
-      background-color: var(--primary-hover);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+      transform: scale(1.01);
     }
 
     /* Toast Notification */
     #toast {
       visibility: hidden;
-      min-width: 250px;
-      background-color: #10b981;
-      color: #fff;
+      min-width: 280px;
+      background-color: #0d111a;
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      font-family: 'Share Tech Mono', monospace;
       text-align: center;
       border-radius: 8px;
-      padding: 12px;
+      padding: 14px;
       position: fixed;
       z-index: 100;
       left: 50%;
       bottom: 30px;
       transform: translateX(-50%);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
       font-size: 0.9rem;
+      letter-spacing: 0.5px;
     }
 
     #toast.show {
       visibility: visible;
-      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.4s, fadeout 0.4s 2.6s;
     }
 
     @keyframes fadein {
-      from {bottom: 0; opacity: 0;}
-      to {bottom: 30px; opacity: 1;}
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
     }
 
     @keyframes fadeout {
-      from {bottom: 30px; opacity: 1;}
-      to {bottom: 0; opacity: 0;}
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Jadwal Piket XI TJKT 1</h1>
-    <p>Update Otomatis & Real-time</p>
+    <div class="status-badge">
+      <span class="status-dot"></span> STATUS: UNDETECTED & ONLINE
+    </div>
+    <h1>JADWAL PIKET <span>XI TJKT 1</span></h1>
+    <p>[ REALTIME DATABASE INJECTOR V1.0 ]</p>
   </header>
 
   <!-- Tombol Sembunyi/Tampil Admin -->
-  <button class="admin-toggle-btn" onclick="toggleAdmin()">⚙️ Panel Edit Admin</button>
+  <button class="admin-toggle-btn" onclick="toggleAdmin()">🔒 PANEL CONTROL ADMIN</button>
 
   <!-- Panel Edit Admin -->
   <div class="admin-card" id="adminPanel">
-    <h3>Edit Jadwal Piket</h3>
-    <small style="color: #64748b; display:block; margin-bottom: 15px;">
-      Pisahkan nama anggota piket dengan koma (contoh: Andi, Budi, Cici)
+    <h3>// EDIT DATA PIKET</h3>
+    <small style="color: var(--text-muted); display:block; margin-bottom: 15px; font-family: 'Share Tech Mono', monospace;">
+      * Pisahkan nama anggota piket dengan koma (contoh: Andi, Budi, Cici)
     </small>
 
     <div class="form-group">
@@ -250,34 +362,34 @@
       <input type="text" id="in-jumat" placeholder="Nama siswa piket Jumat">
     </div>
 
-    <button class="save-btn" onclick="simpanJadwal()">Simpan Perubahan</button>
+    <button class="save-btn" onclick="simpanJadwal()">EXECUTE & SAVE</button>
   </div>
 
   <!-- Tampilan Kartu Hari untuk Siswa -->
   <div class="grid-container">
     <div class="card">
-      <div class="card-title">Senin</div>
-      <div id="piket-senin" class="piket-list">Memuat...</div>
+      <div class="card-title">SENIN</div>
+      <div id="piket-senin" class="piket-list">Memuat data...</div>
     </div>
 
     <div class="card">
-      <div class="card-title">Selasa</div>
-      <div id="piket-selasa" class="piket-list">Memuat...</div>
+      <div class="card-title">SELASA</div>
+      <div id="piket-selasa" class="piket-list">Memuat data...</div>
     </div>
 
     <div class="card">
-      <div class="card-title">Rabu</div>
-      <div id="piket-rabu" class="piket-list">Memuat...</div>
+      <div class="card-title">RABU</div>
+      <div id="piket-rabu" class="piket-list">Memuat data...</div>
     </div>
 
     <div class="card">
-      <div class="card-title">Kamis</div>
-      <div id="piket-kamis" class="piket-list">Memuat...</div>
+      <div class="card-title">KAMIS</div>
+      <div id="piket-kamis" class="piket-list">Memuat data...</div>
     </div>
 
     <div class="card">
-      <div class="card-title">Jumat</div>
-      <div id="piket-jumat" class="piket-list">Memuat...</div>
+      <div class="card-title">JUMAT</div>
+      <div id="piket-jumat" class="piket-list">Memuat data...</div>
     </div>
   </div>
 
@@ -289,7 +401,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Konfigurasi Firebase Anda
+    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDDF2cTU3FIAl5_FZitRm3UhVRtrBms9eU",
       authDomain: "jadwal-piket-xi-tjkt-1.firebaseapp.com",
@@ -306,10 +418,10 @@
 
     const hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
 
-    // 1. Format Nama (Memisahkan Koma Menjadi Bullet Point)
+    // 1. Format Nama (Memisahkan Koma Menjadi Bullet Point Neon)
     function formatNama(str) {
-      if (!str) return "Tidak ada piket";
-      return str.split(',').map(nama => "• " + nama.trim()).join('\n');
+      if (!str) return "> Tidak ada piket";
+      return str.split(',').map(nama => "> " + nama.trim()).join('\n');
     }
 
     // 2. Baca Data Realtime dari Firebase Database
@@ -332,18 +444,33 @@
 
       set(ref(db, 'jadwal'), payload)
         .then(() => {
-          showToast("Jadwal berhasil diperbarui untuk semua!");
+          showToast("[SUCCESS] Data berhasil disimpan!");
         })
         .catch((err) => {
-          showToast("Gagal menyimpan! Periksa Realtime Database Rules.");
+          showToast("[ERROR] Gagal menyimpan ke database!");
           console.error(err);
         });
     };
 
-    // 4. Buka / Tutup Panel Edit
+    // 4. Buka / Tutup Panel Edit dengan Passcode
     window.toggleAdmin = function() {
       const panel = document.getElementById('adminPanel');
-      panel.classList.toggle('active');
+      
+      // Jika panel sedang terbuka, tutup langsung tanpa minta password
+      if (panel.classList.contains('active')) {
+        panel.classList.remove('active');
+        return;
+      }
+
+      // Jika panel tertutup, minta verifikasi kata sandi
+      const inputPass = prompt("[SECURITY CHECK]\nMasukkan Sandi Admin:");
+      
+      if (inputPass === "AAACLAN") {
+        panel.classList.add('active');
+        showToast("[ACCESS GRANTED] Panel Admin Terbuka!");
+      } else if (inputPass !== null) {
+        showToast("[ACCESS DENIED] Sandi Salah!");
+      }
     };
 
     // 5. Notifikasi Toast
