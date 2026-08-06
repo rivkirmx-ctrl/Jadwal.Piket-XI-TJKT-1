@@ -55,7 +55,7 @@
       position: relative;
     }
 
-    /* Status Badge ala Cheat Menu */
+    /* Status Badge */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -125,7 +125,6 @@
       transition: all 0.25s ease;
     }
 
-    /* Accent Line Atas Kartu */
     .card::before {
       content: '';
       position: absolute;
@@ -158,9 +157,6 @@
       margin-bottom: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .piket-list {
@@ -205,11 +201,11 @@
     .admin-card {
       display: none;
       background: #0b0f19;
-      border: 1px dashed var(--neon-green);
+      border: 1px solid var(--neon-green);
       border-radius: 10px;
       padding: 22px;
       margin-bottom: 30px;
-      box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.05);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
     }
 
     .admin-card.active {
@@ -284,6 +280,100 @@
       transform: scale(1.01);
     }
 
+    /* MODAL POPUP LOGIN ADMIN (HITAM) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(3, 5, 9, 0.9);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-box {
+      background: #090d16;
+      border: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-box h3 {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--neon-cyan);
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .modal-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .modal-box input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      background: #030509;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 6px;
+      color: var(--neon-green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    .modal-box input[type="password"]:focus {
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-transform: uppercase;
+    }
+
+    .modal-btn-submit {
+      background: var(--neon-cyan);
+      color: #000;
+    }
+
+    .modal-btn-cancel {
+      background: transparent;
+      border: 1px solid var(--neon-red);
+      color: var(--neon-red);
+    }
+
     /* Toast Notification */
     #toast {
       visibility: hidden;
@@ -296,7 +386,7 @@
       border-radius: 8px;
       padding: 14px;
       position: fixed;
-      z-index: 100;
+      z-index: 1100;
       left: 50%;
       bottom: 30px;
       transform: translateX(-50%);
@@ -393,6 +483,19 @@
     </div>
   </div>
 
+  <!-- Modal Login Admin Dark Theme -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-box">
+      <h3>[ SECURITY CHECK ]</h3>
+      <p>Masukkan kata sandi admin untuk melanjutkan</p>
+      <input type="password" id="adminPasswordInput" placeholder="••••••••" onkeydown="handleKeyPress(event)">
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" onclick="closeModal()">BATAL</button>
+        <button class="modal-btn modal-btn-submit" onclick="verifikasiSandi()">VERIFIKASI</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notifikasi -->
   <div id="toast">Data berhasil diperbarui!</div>
 
@@ -452,24 +555,37 @@
         });
     };
 
-    // 4. Buka / Tutup Panel Edit dengan Passcode
+    // 4. Logika Modal & Verifikasi Passcode Admin
     window.toggleAdmin = function() {
       const panel = document.getElementById('adminPanel');
-      
-      // Jika panel sedang terbuka, tutup langsung tanpa minta password
       if (panel.classList.contains('active')) {
         panel.classList.remove('active');
-        return;
+      } else {
+        document.getElementById('loginModal').classList.add('active');
+        const passInput = document.getElementById('adminPasswordInput');
+        passInput.value = '';
+        passInput.focus();
       }
+    };
 
-      // Jika panel tertutup, minta verifikasi kata sandi
-      const inputPass = prompt("[SECURITY CHECK]\nMasukkan Sandi Admin:");
-      
+    window.closeModal = function() {
+      document.getElementById('loginModal').classList.remove('active');
+    };
+
+    window.verifikasiSandi = function() {
+      const inputPass = document.getElementById('adminPasswordInput').value;
       if (inputPass === "AAACLAN") {
-        panel.classList.add('active');
+        document.getElementById('loginModal').classList.remove('active');
+        document.getElementById('adminPanel').classList.add('active');
         showToast("[ACCESS GRANTED] Panel Admin Terbuka!");
-      } else if (inputPass !== null) {
+      } else {
         showToast("[ACCESS DENIED] Sandi Salah!");
+      }
+    };
+
+    window.handleKeyPress = function(e) {
+      if (e.key === 'Enter') {
+        window.verifikasiSandi();
       }
     };
 
