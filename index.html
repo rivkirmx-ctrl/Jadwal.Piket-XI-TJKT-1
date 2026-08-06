@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="whJjgBQxTg1xyPobHsOrGNJFFK4nzUID6cEdgIfa3u4" />
+  
   <!-- SEO Meta Tags -->
   <title>Jadwal Piket XI TJKT 1</title>
   <meta name="description" content="Jadwal piket harian kelas XI TJKT 1 real-time terupdate.">
@@ -285,25 +286,22 @@
 
   <!-- Firebase JavaScript Module -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Configuration Firebase milik XI TJKT 1
+    // Konfigurasi Firebase Anda
     const firebaseConfig = {
       apiKey: "AIzaSyDDF2cTU3FIAl5_FZitRm3UhVRtrBms9eU",
       authDomain: "jadwal-piket-xi-tjkt-1.firebaseapp.com",
-      databaseURL: "https://jadwal-piket-xi-tjkt-1-default-rtdb.firebaseio.com",
       projectId: "jadwal-piket-xi-tjkt-1",
       storageBucket: "jadwal-piket-xi-tjkt-1.firebasestorage.app",
       messagingSenderId: "877803012357",
-      appId: "1:877803012357:web:065f10333294bba7cab76c",
-      measurementId: "G-PS1SE9HHWX"
+      appId: "1:877803012357:web:eebfa099ff6dfefccab76c",
+      measurementId: "G-35P893PZNC"
     };
 
-    // Inisialisasi Firebase
+    // Inisialisasi Firebase & Realtime Database
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     const db = getDatabase(app);
 
     const hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
@@ -337,7 +335,7 @@
           showToast("Jadwal berhasil diperbarui untuk semua!");
         })
         .catch((err) => {
-          showToast("Gagal menyimpan! Periksa Realtime Database.");
+          showToast("Gagal menyimpan! Periksa Realtime Database Rules.");
           console.error(err);
         });
     };
@@ -353,7 +351,9 @@
       const toast = document.getElementById("toast");
       toast.innerText = msg;
       toast.className = "show";
-      setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+      setTimeout(() => { 
+        toast.className = toast.className.replace("show", ""); 
+      }, 3000);
     }
   </script>
 </body>
